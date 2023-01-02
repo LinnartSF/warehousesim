@@ -10,8 +10,12 @@ if external  task assignment is applied, the main routine consuming the warehous
 
 examples will be provided here
 
-also check
+also check:
 
- <a href="https://www.supplychaindataanalytics.com/agv-simulation-of-part-routings-in-anylogic/">AGV simulation for AGV transport routing </a>
- <a href="https://www.supplychaindataanalytics.com/agent-based-segregation-model-python/">Agent-based segregation model in Python</a>
- <a href="https://www.supplychaindataanalytics.com/conveyor-routing-simulation-in-anylogic/">Conveyor routing simulation in AnyLogic</a>
+<a href="https://www.supplychaindataanalytics.com/agv-simulation-of-part-routings-in-anylogic/">AGV simulation for AGV transport routing </a>
+
+<a href="https://www.supplychaindataanalytics.com/agent-based-segregation-model-python/">Agent-based segregation model in Python</a>
+
+<a href="https://www.supplychaindataanalytics.com/conveyor-routing-simulation-in-anylogic/">Conveyor routing simulation in AnyLogic</a>
+
+<a href="https://www.supplychaindataanalytics.com/simulation-methods-for-scm-analysts/">Simulation methods for SCM analysts</a>
