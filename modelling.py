@@ -1,5 +1,6 @@
 from framework import *
 from strategies import *
+from ui import *
 
 import random
 
@@ -17,7 +18,6 @@ class Model:
     Iteration   :int
     Vehicles    :list
     Tasks       :dict # all tasks that are not ready for dispatch yet (FIFO management)
-    Queued      :list # all tasks that are ready for dispatch  (FIFO management)
     Jobs        :list # jobs are dispatched tasks, i.e. activated tasks that have already been assigned to vehicles (hence "jobs") (FIFO management)
     Crosspoints :list
 
@@ -51,7 +51,6 @@ class Model:
 
         self.Vehicles = []
         self.Tasks = []
-        self.Queued = []
         self.Jobs = []
         self.Crosspoints = []
 
@@ -76,23 +75,46 @@ class Model:
                 duedate :int,
                 type :str,
                 edges :list,
-                speeds :list
-                ) -> None:
-        """
+                speeds :list, 
+                assignment :bool
+                ) -> bool:
+        """method for adding tasks to model
         
         should be called at the beginning after setting up model, before running model; 
         tasks should be added in sequence, in accordance with their earliest start date
 
+        Args:
+            startdate (int): earliest time this job can move
+            duedate (int): due date for job (arrival at sink node)
+            type (str): vehicle type, if not identified all vehicle types are considered
+            edges (list): edges of the job specifying the movement
+            speeds (list): movement duration along every edge
+            assignment (bool): specifies whether assignment to vehicle should be done by model (internally) or by main routine (externally)
+        
+        Returns:
+            assigned (bool): True if task already assigned to vehicle, False if this has to be done externally
+
         """
 
-        # TODO detect violations of start date FIFO management required, and place task at correct index to ensure FIFO order and management
+        # TODO detect violations of start date FIFO management required, and place task at correct index to ensure FIFO order management
+        if assignment == True:
 
-        self.Tasks.append(Task(startdate,
+            # TODO implement: 1) find vehicle in vehicle pool, 2) assign vehicle to it, 3) assign task to vehicle, 4) add assigned task directly to .Jobs list 
+            warn("internal task assignment not implemented into modelling.py yet")
+            return False # TODO: set True when assignment logic has been implemented
+    
+        else:
+
+            self.Tasks.append(Task(startdate,
                  duedate,
                  type,
                  edges,
                  speeds
                  ))
+            
+            return False
+        
+
         
     def step(self) -> None:
         """implements one incremental iteration of the simulation
@@ -101,60 +123,27 @@ class Model:
         
         """
 
-        # 1: check if any tasks can be queued for dispatch
-        for t in self.Tasks:
-            
-            if t.Startdate <= self.Iteration:
+        # note: task assignment is done externally, in main routine 
 
-                self.Queued.append(t)
-                self.Tasks.remove(t)
-
-            else:
-
-                break # no need to search rest of task list since FIFO management based on start date is assumed
-
-        # 2: check if queued tasks (if any) can be released and assigned to a vehicle
-        availables = [o for o in self.Vehicles if len(o.Path_edges) > 0]
-
-        if len(availables):
-
-            for t in self.Queued:
-
-                # assign task to random vehicle
-                # TODO implement other assignment logics
-
-                v = random.choice(availables)
-
-                # what is the current vehicle position? 
-
-                # determine path to start position of job
-
-                # 
-
-
-
-
-                
-
-        # 3: for all jobs, update cross points
+        # 1: for all jobs, update cross points
         # TODO
 
-        # 4: schedule jobs by reserving edges and nodes, and by assigning ownerships; considering cross points
+        # 2: schedule jobs by reserving edges and nodes, and by assigning ownerships; considering cross points
         # TODO
 
-        # 5: execute vehicle movements (where possible)
+        # 3: execute vehicle movements (where possible)
         # TODO
 
-        # 6: any vehicle that has completed its edge enters node, if node is free
+        # 4: any vehicle that has completed its edge enters node, if node is free
         # TODO
 
-        # 7: update location attribute in all vehicles
+        # 5: update location attribute in all vehicles
         # TODO
 
-        # 8: check all jobs whether they have been completed; if so, pop them and make vehicle "idle" (empty Path_ lists), while mainting relevant location in location attribute of vehicle instance
+        # 6: check all jobs whether they have been completed; if so, pop them and make vehicle "idle" (empty Path_ lists), while mainting relevant location in location attribute of vehicle instance
         # TODO
 
         pass
         
-        # 9: increment iteration
+        # 8: increment iteration
         self.Iteration += 1
