@@ -3,16 +3,22 @@ from strategies import *
 
 import random
 
+
 # class for building a vehicle routing simulation model
 class Model:
+    """class used for modelling the vehicle interaction layout and routing
+
+    note: Tasks, Queued, Jobs must strictly be FIFO managed
+    
+    """
 
     Grid        :Layout
     Iterations  :int
     Iteration   :int
     Vehicles    :list
-    Tasks       :dict # all tasks that are not ready for dispatch yet
-    Queued      :list # all tasks that are ready for dispatch 
-    Jobs        :list # jobs are dispatched tasks, i.e. activated tasks that have already been assigned to vehicles (hence "jobs")
+    Tasks       :dict # all tasks that are not ready for dispatch yet (FIFO management)
+    Queued      :list # all tasks that are ready for dispatch  (FIFO management)
+    Jobs        :list # jobs are dispatched tasks, i.e. activated tasks that have already been assigned to vehicles (hence "jobs") (FIFO management)
     Crosspoints :list
 
     def __init__(self,
@@ -79,6 +85,8 @@ class Model:
 
         """
 
+        # TODO detect violations of start date FIFO management required, and place task at correct index to ensure FIFO order and management
+
         self.Tasks.append(Task(startdate,
                  duedate,
                  type,
@@ -93,36 +101,60 @@ class Model:
         
         """
 
-        # 1: check if tasks (if any) can be released and assigned to a vehicle
-        # TODO
+        # 1: check if any tasks can be queued for dispatch
+        for t in self.Tasks:
+            
+            if t.Startdate <= self.Iteration:
+
+                self.Queued.append(t)
+                self.Tasks.remove(t)
+
+            else:
+
+                break # no need to search rest of task list since FIFO management based on start date is assumed
+
+        # 2: check if queued tasks (if any) can be released and assigned to a vehicle
         availables = [o for o in self.Vehicles if len(o.Path_edges) > 0]
 
         if len(availables):
 
-            for t in self.Tasks:
+            for t in self.Queued:
+
+                # assign task to random vehicle
+                # TODO implement other assignment logics
+
+                v = random.choice(availables)
+
+                # what is the current vehicle position? 
+
+                # determine path to start position of job
 
                 # 
 
 
 
+
                 
 
-        # 2: for all jobs, update cross points
+        # 3: for all jobs, update cross points
         # TODO
 
-        # 3: schedule jobs by reserving edges and nodes, and by assigning ownerships; considering cross points
+        # 4: schedule jobs by reserving edges and nodes, and by assigning ownerships; considering cross points
         # TODO
 
-        # 4: execute vehicle movements (where possible)
+        # 5: execute vehicle movements (where possible)
         # TODO
 
-        # 5: any vehicle that has completed its edge enters node, if node is free
+        # 6: any vehicle that has completed its edge enters node, if node is free
         # TODO
 
-        # 6: update location attribute in all vehicles
+        # 7: update location attribute in all vehicles
         # TODO
 
-        # 6: check all jobs whether they have been completed; if so, pop them and make vehicle "idle" (empty Path_ lists), while mainting relevant location in location attribute of vehicle instance
+        # 8: check all jobs whether they have been completed; if so, pop them and make vehicle "idle" (empty Path_ lists), while mainting relevant location in location attribute of vehicle instance
         # TODO
 
         pass
+        
+        # 9: increment iteration
+        self.Iteration += 1
