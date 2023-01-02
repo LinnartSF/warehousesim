@@ -3,13 +3,15 @@ from strategies import *
 
 import random
 
+# class for building a vehicle routing simulation model
 class Model:
 
     Grid        :Layout
     Iterations  :int
     Iteration   :int
     Vehicles    :list
-    Tasks       :list
+    Tasks       :dict # all tasks that are not ready for dispatch yet
+    Queued      :list # all tasks that are ready for dispatch 
     Jobs        :list # jobs are dispatched tasks, i.e. activated tasks that have already been assigned to vehicles (hence "jobs")
     Crosspoints :list
 
@@ -20,7 +22,20 @@ class Model:
                  nodecapacity :int = 1,
                  edgecapacity :int = 1
                 ):
-        """
+        """Model constructor
+
+        it is assumed that tasks are added to .Tasks attribute (list) by main program, in accordance to task dispatch:
+        task dispatch control (releasing tasks) is assumed to be externally controlled
+
+        Args: 
+            iterations (int): maximum simulation runt time
+            rows (int): refer to grid size in y-dimension
+            columns (int): refers to grid size in x-dimension
+            nodecapacity (int): maximum number of vehicles that can be in any node of the model
+            edgecapacity (int): maximum number of vehicles that can be in any edge before it is "fully occupied"
+
+        Returns:
+            None 
         
         """
 
@@ -30,6 +45,7 @@ class Model:
 
         self.Vehicles = []
         self.Tasks = []
+        self.Queued = []
         self.Jobs = []
         self.Crosspoints = []
 
@@ -77,20 +93,36 @@ class Model:
         
         """
 
-        # TODO implement below simulation progress logic
+        # 1: check if tasks (if any) can be released and assigned to a vehicle
+        # TODO
+        availables = [o for o in self.Vehicles if len(o.Path_edges) > 0]
 
-        # 1: check if tasks can be released and assigned to a vehicle
+        if len(availables):
+
+            for t in self.Tasks:
+
+                # 
+
+
+
+                
 
         # 2: for all jobs, update cross points
+        # TODO
 
         # 3: schedule jobs by reserving edges and nodes, and by assigning ownerships; considering cross points
+        # TODO
 
         # 4: execute vehicle movements (where possible)
+        # TODO
 
         # 5: any vehicle that has completed its edge enters node, if node is free
+        # TODO
 
         # 6: update location attribute in all vehicles
+        # TODO
 
         # 6: check all jobs whether they have been completed; if so, pop them and make vehicle "idle" (empty Path_ lists), while mainting relevant location in location attribute of vehicle instance
+        # TODO
 
         pass

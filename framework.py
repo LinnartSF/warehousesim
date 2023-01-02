@@ -264,7 +264,7 @@ class Vehicle:
         # - is the next segment available? OR is the next edge available
         pass
 
-# class for modeling Tasks
+# class for modeling tasks
 class Task: 
     """
     
@@ -275,7 +275,7 @@ class Task:
     Type        :str # vehicle type that is allowed
     Edges       :list
     Speeds      :list # all edges have the same length
-    Transporter :Vehicle
+    Transporter :Vehicle # vehicle currently executing tasks
 
     def __init__(self,
                  startdate :int,
