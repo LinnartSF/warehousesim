@@ -205,9 +205,6 @@ class Layout:
 
         return self.Nodes[(col-1)*self.Y+row]
 
-
-
-
 # class for modeling vehicles
 class Vehicle:
     """
@@ -304,6 +301,9 @@ class Crosspoint:
     
     """
 
+    Nodeobj :Node  # node representing the crosspoint
+    Jobs    :list  # contains list of all tasks that are running via this cross point
+
     def __init__(self,
                  node: Node,
                  jobs: list
@@ -312,5 +312,5 @@ class Crosspoint:
         
         """
 
-        self.Node = node
+        self.Nodeobj = node
         self.Jobs = jobs
