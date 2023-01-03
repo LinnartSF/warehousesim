@@ -2,6 +2,8 @@ from framework import *
 from strategies import *
 from ui import *
 
+import numpy as np
+
 import random
 
 
@@ -17,9 +19,10 @@ class Model:
     Iterations  :int
     Iteration   :int
     Vehicles    :list
-    Tasks       :dict # all tasks that are not ready for dispatch yet (FIFO management)
-    Jobs        :list # jobs are dispatched tasks, i.e. activated tasks that have already been assigned to vehicles (hence "jobs") (FIFO management)
-    Crosspoints :list
+    Tasks       :dict       # all tasks that are not ready for dispatch yet (FIFO management)
+    Jobs        :list       # jobs are dispatched tasks, i.e. activated tasks that have already been assigned to vehicles (hence "jobs") (FIFO management)
+    Crosspoints :list       # list of crosspoints in the model
+    Results     :np.ndarray # container for animation, should contain animation data
 
     def __init__(self,
                  iterations :int,
@@ -47,7 +50,7 @@ class Model:
 
         self.Iterations = iterations
         
-        self.Iteration = 0
+        self.Iteration = 0 # iterations are counted starting at 0
 
         self.Vehicles = []
         self.Tasks = []
@@ -55,10 +58,13 @@ class Model:
         self.Crosspoints = []
 
         self.Grid = Layout(columns, rows, nodecapacity, edgecapacity)
+
+        # prepopulate animation data template (col1 for simulation time, col2 for vehicle position col (x), col3 for vehicle position row (y), col4 for number of vehicles
+        self.Results = np.zeros(shape=(self.Iterations, 4)) # TODO: index it correctly
     
     def add_vehicle(self,
                     type: str,
-                    loc: Edge = None
+                    loc: Edge = None # TODO check if it doesnt make more sense to locate every vehicle at one edge, first
                    ) -> None:
         """
         
@@ -67,7 +73,6 @@ class Model:
         o = Vehicle(type)
 
         o.Loc = loc
-
         self.Vehicles.append(o)
     
     def add_task(self,
@@ -148,16 +153,66 @@ class Model:
         # 2: schedule jobs by reserving edges and nodes, and by assigning ownerships; considering cross points
         # TODO
 
-        # 3: execute vehicle movements (where possible)
+        # 3: execute vehicle movements (where possible), if vehicle is in a node it enters next edge, if edge is free
         # TODO
 
-        # 4: any vehicle that has completed its edge enters node, if node is free
+        # 4: any vehicle that has completed its edge enters node at end of edge, if node is free
         # TODO
 
         # 5: update location attribute in all vehicles
         # TODO
 
-        # 6: check all jobs whether they have been completed; if so, pop them and make vehicle "idle" (empty Path_ lists), while mainting relevant location in location attribute of vehicle instance
+        # 6: write vehicle location data into layout
+        for v in self.Vehicles:
+
+            # is current location Edge or Node type?
+            if type(v.Loc) == Edge:
+
+                # vehicle currently located on edge
+                i = v.Loc.I.ID
+                j = v.Lov.J.ID
+
+                x_i = i//self.Grid.Y + 1
+                x_j = j//self.Grid.Y + 1
+                y_i = i%self.Grid.Y 
+                y_j = j%self.Grid.Y
+
+                self.Results[self.Iteration, 0] = self.Iteration + 1
+                self.Results[self.Iteration, 3] += 1          # no of vehicles
+
+                if j == i+1:      # one step downward
+                    
+                    self.Results[self.Iteration, 1] =  x_i        # col
+                    self.Results[self.Iteration, 2] = 2*y_i       # row
+                
+                elif j == i-1:    # one step upward
+                    
+                    self.Results[self.Iteration, 1] = x_i         # col
+                    self.Results[self.Iteration, 2] = (y_i-1)*2   # row
+                
+                elif j > i:       # step sideward to the right
+                    
+                    self.Results[self.Iteration, 1] = 99
+                    self.Results[self.Iteration, 2] = y_i
+
+                else:             # step sideward to the left
+                    
+                    pass
+
+                # TODO calculate cell position for animation
+                i
+
+                # TODO write cell position for animation
+
+
+
+            else:
+
+                # vehicle currently located on Node
+
+
+
+        # 7: check all jobs whether they have been completed; if so, pop them and make vehicle "idle" (empty Path_ lists), while mainting relevant location in location attribute of vehicle instance
         # TODO
 
         pass

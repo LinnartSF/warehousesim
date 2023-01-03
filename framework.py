@@ -7,8 +7,10 @@ class Node:
     Reservations :int
     Capacity     :int  # number of agvs that can fit into node
     Owners       :list # list of vehicles that reserved this node and "own" it
+    ID           :int  # node index
 
     def __init__(self,
+                 id : int,
                  capacity :int = 1,
                  owners :list = []
                 ):
@@ -16,6 +18,7 @@ class Node:
         
         """
 
+        self.ID = id
         self.Capacity = capacity
         self.Owners = owners
     
@@ -79,8 +82,8 @@ class Layout:
 
     X         :int   # number of nodes in x direction of grid (# of columns)
     Y         :int   # number of nodes in y direction of grid (# of rows)
-    Nodes     :dict  # dictionary with nodes
-    Edges     :dict  # dictionary with edges; dictionary acts as a adjacency matrix
+    Nodes     :dict  # dictionary with nodes;
+    Edges     :dict  # dictionary with edges; dictionary acts as adjacency matrix
 
     def __init__(self, 
                  x: int,
@@ -103,7 +106,7 @@ class Layout:
 
             for j in range(y):
 
-                self.Nodes[(i)*y+(j+1)] = Node(capacity = nodecapacity)
+                self.Nodes[(i)*y+(j+1)] = Node(id = (i)*y+(j+1), capacity = nodecapacity)
         
         # setup edges
         for i in range(1, x+1):
