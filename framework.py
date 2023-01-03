@@ -272,10 +272,12 @@ class Task:
 
     Startdate   :int
     Duedate     :int
-    Type        :str # vehicle type that is allowed
+    Type        :str     # vehicle type that is allowed
     Edges       :list
-    Speeds      :list # all edges have the same length
+    Speeds      :list    # all edges have the same length
     Transporter :Vehicle # vehicle currently executing tasks
+    Crosspoints :list    # crosspoints of this job
+    CPChecked   :bool    # used to indicate that this job has already been considered for cosspoint list
 
     def __init__(self,
                  startdate :int,
@@ -294,6 +296,7 @@ class Task:
         self.Edges = edges
         self.Speeds = speeds
         self.Transporter = None
+        self.Crosspoints = []
 
 # class for modeling crosspoints
 class Crosspoint:

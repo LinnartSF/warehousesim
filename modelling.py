@@ -114,19 +114,36 @@ class Model:
             
             return False
         
-
-        
     def step(self) -> None:
         """implements one incremental iteration of the simulation
 
-        should only be called once model, its tasks, and its vehicles have fully been setup
+        should only be called once model, its tasks, and its vehicles have fully been setup;
+        assumes that all vehicles are
+
+        Args:
+            None
+        
+        Returns:
+            None
         
         """
 
-        # note: task assignment is done externally, in main routine 
+        # note: task assignment is done externally in main run routine
 
-        # 1: for all jobs, update cross points
-        # TODO
+        # 1: update crosspoints list for new jobs
+        for j in self.Jobs:
+
+            # check if job has already been considered for crosspoint checks
+            if j.CPCChecked == True: break
+
+            # find additional crosspoints and add to model list, if any
+            # TODO
+
+            # append crosspoints to job, i.e. j.Crosspoints
+            # TODO
+
+            # remember that this job has already been checked
+            j.CPCChecked = True
 
         # 2: schedule jobs by reserving edges and nodes, and by assigning ownerships; considering cross points
         # TODO
