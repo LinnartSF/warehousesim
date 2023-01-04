@@ -229,6 +229,7 @@ class Vehicle:
     Loc              :any     # reference to the current location, can be Edge or Node
     Time             :int     # remaining "dwell time" on current edge
     Type             :str     # specifies vehicle type (tasks may only be executed by appropriate vehicle type
+    Job              :any    # job assigned to vehicle
 
     def __init__(self,
                  id: int,
@@ -244,6 +245,7 @@ class Vehicle:
         self.Loc = None
         self.Time = 0
         self.Type = type
+        self.Job = None # must be assigned when task is mapped to vehicle
     
     def assign_task(self,
                     edgetimes :list,       # list of ints, with dwell times per edge inferred from node sequence ("nodes" parameter)

@@ -156,16 +156,43 @@ class Model:
         # 2: schedule jobs by reserving edges and nodes, and by assigning ownerships; considering cross points
         # TODO
 
-        # 3: execute vehicle movements (where possible), if vehicle is in a node it enters next edge, if edge is free
-        # TODO
+        # 3: execute vehicle movements (where possible), if vehicle is in a node it enters next edge, if edge is free: update path data; this step includes time consumption and consumes remaining edge time (if above zero)
+        # TODO decentralize this step in next sprint
+        for v in self.Vehicles: # TODO implement order ordering types; so far sequential order implemented here to begin with
 
-        # 4: any vehicle that has completed its edge enters node at end of edge, if node is free
-        # TODO
+            # current location is a Node?
+            if type(v.Loc) == Node:
 
-        # 5: update location attribute in all vehicles
-        # TODO
+                # is vehicle owner of next edge in path?
+                if v in v.Path_edges[0]:
 
-        # 6: write vehicle location data into layout
+                    # update vehicle location
+                    v.Loc = v.Path_edges[0]
+
+            # all vehicles that are on a edge consume one time step of remaining dwell time on edge
+            if type(v.Loc) == Edge:
+
+                v.Path_edgetimes -= 1 # consume one time step of dwell time on edge
+
+        # 4: any vehicle that has completed its edge enters node at edge end, if node is free; update location attribute in all vehicles
+        for v in self.Vehicles: # TODO allow for different ordering strategies here, instead of same vehicle sequence every time
+
+            if v.Job:
+
+                if v.Path_edgetimes[0] <= 0:
+
+                    if v in v.Path_edges[0].J.Owners:
+
+                        # update vehicle location to now be located in node
+                        v.Loc = v.Path_edges[0].J
+
+                        # remove old edge
+                        _ = v.Path_edges.pop(0)
+
+                        # remove therewith associated dwell time index
+                        _ = v.Path_edgetimes.pop(0)
+
+        # 5: write vehicle location data into layout
         for vi in range(0,len(self.Vehicles)):
 
             v = self.Vehicles[vi]
@@ -212,14 +239,32 @@ class Model:
                 x_i = v.Loc.ID//self.Grid.Y 
                 y_i = v.Loc.ID%self.Grid.Y 
 
-                self.Results[self.Iteration+vi, 2] = x_i*2-1         # col 
+                self.Results[self.Iteration+vi, 2] = x_i*2-1         # col
                 self.Results[self.Iteration+vi, 3] = y_i*2-1         # row
 
+        # 6: check all jobs whether they have been completed; if so, pop them and make vehicle "idle" (empty Path_ lists), while mainting relevant location in location attribute of vehicle entrance
+        for v in self.Vehicles:
 
-        # 7: check all jobs whether they have been completed; if so, pop them and make vehicle "idle" (empty Path_ lists), while mainting relevant location in location attribute of vehicle instance
-        # TODO
+            if v.Job:
 
-        pass
-        
-        # 8: increment iteration
+                if len(v.Path_edges) == 0:
+
+                    # job complete, remove task from all crosspoints that still contain it
+                    for cp in v.Job.Crosspoints:
+
+                        cp.Jobs.remove(v.Job)
+                        v.Job.Crosspoints.remove(cp)
+
+                    # remove crosspoints that are no longer cross points
+                    for cp in self.Crosspoints:
+
+                        if len(cp.Jobs) < 2: self.Crosspoints.remove(cp)
+
+                    # remove job from job list 
+                    self.Jobs.remove(v.Job)
+
+                    # set vehicle to "idle" (= .Job = None)
+                    v.Job = None
+
+        # 7: increment iteration
         self.Iteration += 1
