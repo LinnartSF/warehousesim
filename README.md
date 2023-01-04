@@ -14,4 +14,10 @@ also check some other links if you want to get started with vehicle routing simu
 
 # how to use warehousesim
 
-the <strong> asd </strong>
+the <strong> framework.py </strong> provides the class library that can be used for simulation modelling. in detail, the <strong> framework.py </strong> class library provides classes for modelling: <strong> Node class </strong> for modelling a node in the warehouse path layout, <strong> Edge class </strong> representing one-directional edge in the path network, <strong> Segment class </strong> which is not used at the moment, <strong> Layout class </strong> for implementing path network comprised by edges and nodes, <strong> Vehicle class </strong> for modelling vehicle to be routed (can have own step() method; can be of specified type, has Location and Job as well as e.g. current Path (edge trajectory) attributes), <strong> Task class </strong> for modelling tasks to dispatch and jobs already activated and assigned to vehicles, <strong> Crosspoint class </strong> for modelling nodes in the path network that are conflicting, i.e. nodes crossed by several activate jobs.
+
+# docs
+
+code has been documented using Google style docstrings. you can generate docs for entire library with the following command in terminal: 
+
+
