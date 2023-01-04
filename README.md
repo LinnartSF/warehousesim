@@ -18,7 +18,9 @@ the <strong> framework.py </strong> provides the class library that can be used 
 
 # docs
 
-code has been documented using Google style docstrings. you can generate docs for entire library with the following command in terminal: <code> python -m pydoc -w </code>
+code has been documented using Google style docstrings. you can generate docs for entire library with the following command in terminal: 
+
+<code> python -m pydoc -w </code>
 
 
 
