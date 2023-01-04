@@ -1,11 +1,6 @@
-# warehousesim
-warehouse vehicle simulator
+# warehousesim vehicle routing simulator for warehouses
 
-this project develops a vehicle routing simulator.
-
-the warehousesim package is the simulation core. 
-
-task assignment can be done internally or externally. if internal task assignment is applied, task to vehice assignment has to be implemented inside the modelling.py file.  if external  task assignment is applied, the main routine consuming the warehousesim package has to assign tasks to vehicles. examples will be provided here;
+this project develops a vehicle routing simulator. the warehousesim package is the simulation core. task assignment to vehicles can be done internally or externally. if internal task assignment is applied, task to vehice assignment has to be implemented inside the modelling.py file.  if external  task assignment is applied, the main routine consuming the warehousesim package has to assign tasks to vehicles. examples will be provided here;
 
 also check some other links if you want to get started with vehicle routing simulation:
 
