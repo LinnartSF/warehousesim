@@ -1,4 +1,13 @@
-# class for modeling nodes
+"""
+
+module provides a library of predefined object classes
+
+module can be consumed for simulation modelling
+
+"""
+
+
+# class for modelling nodes
 class Node:
     """
     
@@ -214,19 +223,22 @@ class Vehicle:
     
     """
 
+    ID               :int     # vehicle ID
     Path_edges       :list    # 1D list of one directional edges in trajectory order
     Path_edgetimes   :list    # 1D list of movement durations per edge, with second dimensions grouping into segments in accordance with path_nodes attribute
     Loc              :any     # reference to the current location, can be Edge or Node
     Time             :int     # remaining "dwell time" on current edge
-    Type             :str     # specifies vehicle type (tasks may only be executed by appropriate vehicle type)
+    Type             :str     # specifies vehicle type (tasks may only be executed by appropriate vehicle type
 
     def __init__(self,
+                 id: int,
                  type: str
                 ):
         """
         
         """
 
+        self.ID = id
         self.Path_edges = []
         self.Path_edgetimes = []
         self.Loc = None

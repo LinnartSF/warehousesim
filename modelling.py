@@ -22,7 +22,7 @@ class Model:
     Tasks       :dict       # all tasks that are not ready for dispatch yet (FIFO management)
     Jobs        :list       # jobs are dispatched tasks, i.e. activated tasks that have already been assigned to vehicles (hence "jobs") (FIFO management)
     Crosspoints :list       # list of crosspoints in the model
-    Results     :np.ndarray # container for animation, should contain animation data
+    Results     :np.ndarray # container for animation, should contain animation for every iteration, for every vehicle, with columns simtime,vehiclename,xpos,ypos (4 columns)
 
     def __init__(self,
                  iterations :int,
@@ -44,15 +44,15 @@ class Model:
             edgecapacity (int): maximum number of vehicles that can be in any edge before it is "fully occupied"
 
         Returns:
-            None 
+            None
         
         """
 
         self.Iterations = iterations
         
-        self.Iteration = 0 # iterations are counted starting at 0
+        self.Iteration = 0   # iterations are counted starting at 0
 
-        self.Vehicles = []
+        self.Vehicles = []   # vehicles must be added lateron by calling add_vehicle method
         self.Tasks = []
         self.Jobs = []
         self.Crosspoints = []
@@ -60,9 +60,10 @@ class Model:
         self.Grid = Layout(columns, rows, nodecapacity, edgecapacity)
 
         # prepopulate animation data template (col1 for simulation time, col2 for vehicle position col (x), col3 for vehicle position row (y), col4 for number of vehicles
-        self.Results = np.zeros(shape=(self.Iterations, 4)) # TODO: index it correctly
+        self.Results = None   # create predefined ndarray with numpy for every vehicle added
     
     def add_vehicle(self,
+                    id: int,
                     type: str,
                     loc: Edge = None # TODO check if it doesnt make more sense to locate every vehicle at one edge, first
                    ) -> None:
@@ -70,10 +71,12 @@ class Model:
         
         """
 
-        o = Vehicle(type)
+        o = Vehicle(id, type)
 
         o.Loc = loc
         self.Vehicles.append(o)
+
+        self.Results = np.zeros(shape = (self.Iterations*len(self.Vehicles), 4))
     
     def add_task(self,
                 startdate :int,
@@ -163,7 +166,13 @@ class Model:
         # TODO
 
         # 6: write vehicle location data into layout
-        for v in self.Vehicles:
+        for vi in range(0,len(self.Vehicles)):
+
+            v = self.Vehicles[vi]
+
+            # vehicle currently located on Node
+            self.Results[self.Iteration+vi, 0] = self.Iteration + 1
+            self.Results[self.Iteration+vi, 1] = v.ID
 
             # is current location Edge or Node type?
             if type(v.Loc) == Edge:
@@ -177,39 +186,34 @@ class Model:
                 y_i = i%self.Grid.Y 
                 y_j = j%self.Grid.Y
 
-                self.Results[self.Iteration, 0] = self.Iteration + 1
-                self.Results[self.Iteration, 3] += 1          # no of vehicles
-
-                if j == i+1:      # one step downward
+                if j == i+1:     # one step downward
                     
-                    self.Results[self.Iteration, 1] =  x_i        # col
-                    self.Results[self.Iteration, 2] = 2*y_i       # row
+                    self.Results[self.Iteration+vi, 2] =  x_i        # col
+                    self.Results[self.Iteration+vi, 3] = 2*y_i       # row
                 
                 elif j == i-1:    # one step upward
                     
-                    self.Results[self.Iteration, 1] = x_i         # col
-                    self.Results[self.Iteration, 2] = (y_i-1)*2   # row
+                    self.Results[self.Iteration+vi, 2] = x_i         # col
+                    self.Results[self.Iteration+vi, 3] = (y_i-1)*2   # row
                 
                 elif j > i:       # step sideward to the right
                     
-                    self.Results[self.Iteration, 1] = 99
-                    self.Results[self.Iteration, 2] = y_i
+                    self.Results[self.Iteration+vi, 2] = 2*x_i       # col
+                    self.Results[self.Iteration+vi, 3] = y_i         # row
 
                 else:             # step sideward to the left
                     
-                    pass
-
-                # TODO calculate cell position for animation
-                i
-
-                # TODO write cell position for animation
-
-
+                    self.Results[self.Iteration+vi, 2] = 2*(x_i-1)   # col
+                    self.Results[self.Iteration+vi, 3] = y_i         # row
 
             else:
 
                 # vehicle currently located on Node
+                x_i = v.Loc.ID//self.Grid.Y 
+                y_i = v.Loc.ID%self.Grid.Y 
 
+                self.Results[self.Iteration+vi, 2] = x_i*2-1         # col 
+                self.Results[self.Iteration+vi, 3] = y_i*2-1         # row
 
 
         # 7: check all jobs whether they have been completed; if so, pop them and make vehicle "idle" (empty Path_ lists), while mainting relevant location in location attribute of vehicle instance
