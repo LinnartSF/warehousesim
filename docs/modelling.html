@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module modelling</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>modelling</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cfeli03%5Cdesktop%5Clocaldir%5Cgithub%5Cwarehousesim%5Cmodelling.py">c:\users\feli03\desktop\localdir\github\warehousesim\modelling.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top><a href="random.html">random</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="modelling.html#Model">Model</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Model">class <strong>Model</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Model">Model</a>(iterations:&nbsp;int,&nbsp;rows:&nbsp;int,&nbsp;columns:&nbsp;int,&nbsp;nodecapacity:&nbsp;int&nbsp;=&nbsp;1,&nbsp;edgecapacity:&nbsp;int&nbsp;=&nbsp;1)<br>
+&nbsp;<br>
+class&nbsp;used&nbsp;for&nbsp;modelling&nbsp;the&nbsp;vehicle&nbsp;interaction&nbsp;layout&nbsp;and&nbsp;routing<br>
+&nbsp;<br>
+note:&nbsp;Tasks,&nbsp;Queued,&nbsp;Jobs&nbsp;must&nbsp;strictly&nbsp;be&nbsp;FIFO&nbsp;managed<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Model-__init__"><strong>__init__</strong></a>(self, iterations: int, rows: int, columns: int, nodecapacity: int = 1, edgecapacity: int = 1)</dt><dd><tt><a href="#Model">Model</a>&nbsp;constructor<br>
+&nbsp;<br>
+it&nbsp;is&nbsp;assumed&nbsp;that&nbsp;tasks&nbsp;are&nbsp;added&nbsp;to&nbsp;.Tasks&nbsp;attribute&nbsp;(list)&nbsp;by&nbsp;main&nbsp;program,&nbsp;in&nbsp;accordance&nbsp;to&nbsp;task&nbsp;dispatch:<br>
+task&nbsp;dispatch&nbsp;control&nbsp;(releasing&nbsp;tasks)&nbsp;is&nbsp;assumed&nbsp;to&nbsp;be&nbsp;externally&nbsp;controlled<br>
+&nbsp;<br>
+Args:&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;iterations&nbsp;(int):&nbsp;maximum&nbsp;simulation&nbsp;runt&nbsp;time<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rows&nbsp;(int):&nbsp;refer&nbsp;to&nbsp;grid&nbsp;size&nbsp;in&nbsp;y-dimension<br>
+&nbsp;&nbsp;&nbsp;&nbsp;columns&nbsp;(int):&nbsp;refers&nbsp;to&nbsp;grid&nbsp;size&nbsp;in&nbsp;x-dimension<br>
+&nbsp;&nbsp;&nbsp;&nbsp;nodecapacity&nbsp;(int):&nbsp;maximum&nbsp;number&nbsp;of&nbsp;vehicles&nbsp;that&nbsp;can&nbsp;be&nbsp;in&nbsp;any&nbsp;node&nbsp;of&nbsp;the&nbsp;model<br>
+&nbsp;&nbsp;&nbsp;&nbsp;edgecapacity&nbsp;(int):&nbsp;maximum&nbsp;number&nbsp;of&nbsp;vehicles&nbsp;that&nbsp;can&nbsp;be&nbsp;in&nbsp;any&nbsp;edge&nbsp;before&nbsp;it&nbsp;is&nbsp;"fully&nbsp;occupied"<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+
+<dl><dt><a name="Model-add_task"><strong>add_task</strong></a>(self, startdate: int, duedate: int, type: str, edges: list, speeds: list, assignment: bool) -&gt; bool</dt><dd><tt>method&nbsp;for&nbsp;adding&nbsp;tasks&nbsp;to&nbsp;model<br>
+&nbsp;<br>
+should&nbsp;be&nbsp;called&nbsp;at&nbsp;the&nbsp;beginning&nbsp;after&nbsp;setting&nbsp;up&nbsp;model,&nbsp;before&nbsp;running&nbsp;model;&nbsp;<br>
+tasks&nbsp;should&nbsp;be&nbsp;added&nbsp;in&nbsp;sequence,&nbsp;in&nbsp;accordance&nbsp;with&nbsp;their&nbsp;earliest&nbsp;start&nbsp;date<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;startdate&nbsp;(int):&nbsp;earliest&nbsp;time&nbsp;this&nbsp;job&nbsp;can&nbsp;move<br>
+&nbsp;&nbsp;&nbsp;&nbsp;duedate&nbsp;(int):&nbsp;due&nbsp;date&nbsp;for&nbsp;job&nbsp;(arrival&nbsp;at&nbsp;sink&nbsp;node)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;(str):&nbsp;vehicle&nbsp;type,&nbsp;if&nbsp;not&nbsp;identified&nbsp;all&nbsp;vehicle&nbsp;types&nbsp;are&nbsp;considered<br>
+&nbsp;&nbsp;&nbsp;&nbsp;edges&nbsp;(list):&nbsp;edges&nbsp;of&nbsp;the&nbsp;job&nbsp;specifying&nbsp;the&nbsp;movement<br>
+&nbsp;&nbsp;&nbsp;&nbsp;speeds&nbsp;(list):&nbsp;movement&nbsp;duration&nbsp;along&nbsp;every&nbsp;edge<br>
+&nbsp;&nbsp;&nbsp;&nbsp;assignment&nbsp;(bool):&nbsp;specifies&nbsp;whether&nbsp;assignment&nbsp;to&nbsp;vehicle&nbsp;should&nbsp;be&nbsp;done&nbsp;by&nbsp;model&nbsp;(internally)&nbsp;or&nbsp;by&nbsp;main&nbsp;routine&nbsp;(externally)<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;assigned&nbsp;(bool):&nbsp;True&nbsp;if&nbsp;task&nbsp;already&nbsp;assigned&nbsp;to&nbsp;vehicle,&nbsp;False&nbsp;if&nbsp;this&nbsp;has&nbsp;to&nbsp;be&nbsp;done&nbsp;externally</tt></dd></dl>
+
+<dl><dt><a name="Model-add_vehicle"><strong>add_vehicle</strong></a>(self, id: int, type: str, loc: framework.Edge = None) -&gt; None</dt></dl>
+
+<dl><dt><a name="Model-step"><strong>step</strong></a>(self) -&gt; None</dt><dd><tt>implements&nbsp;one&nbsp;incremental&nbsp;iteration&nbsp;of&nbsp;the&nbsp;simulation<br>
+&nbsp;<br>
+should&nbsp;only&nbsp;be&nbsp;called&nbsp;once&nbsp;model,&nbsp;its&nbsp;tasks,&nbsp;and&nbsp;its&nbsp;vehicles&nbsp;have&nbsp;fully&nbsp;been&nbsp;setup;<br>
+assumes&nbsp;that&nbsp;all&nbsp;vehicles&nbsp;are<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'Crosspoints': &lt;class 'list'&gt;, 'Grid': &lt;class 'framework.Layout'&gt;, 'Iteration': &lt;class 'int'&gt;, 'Iterations': &lt;class 'int'&gt;, 'Jobs': &lt;class 'list'&gt;, 'Results': &lt;class 'numpy.ndarray'&gt;, 'Tasks': &lt;class 'dict'&gt;, 'Vehicles': &lt;class 'list'&gt;}</dl>
+
+</td></tr></table></td></tr></table>
+</body></html>

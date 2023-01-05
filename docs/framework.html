@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module framework</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>framework</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Cfeli03%5Cdesktop%5Clocaldir%5Cgithub%5Cwarehousesim%5Cframework.py">c:\users\feli03\desktop\localdir\github\warehousesim\framework.py</a></font></td></tr></table>
+    <p><tt>module&nbsp;provides&nbsp;a&nbsp;library&nbsp;of&nbsp;predefined&nbsp;<a href="builtins.html#object">object</a>&nbsp;classes<br>
+&nbsp;<br>
+module&nbsp;can&nbsp;be&nbsp;consumed&nbsp;for&nbsp;simulation&nbsp;modelling</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="framework.html#Crosspoint">Crosspoint</a>
+</font></dt><dt><font face="helvetica, arial"><a href="framework.html#Edge">Edge</a>
+</font></dt><dt><font face="helvetica, arial"><a href="framework.html#Layout">Layout</a>
+</font></dt><dt><font face="helvetica, arial"><a href="framework.html#Node">Node</a>
+</font></dt><dt><font face="helvetica, arial"><a href="framework.html#Segment">Segment</a>
+</font></dt><dt><font face="helvetica, arial"><a href="framework.html#Task">Task</a>
+</font></dt><dt><font face="helvetica, arial"><a href="framework.html#Vehicle">Vehicle</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Crosspoint">class <strong>Crosspoint</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Crosspoint">Crosspoint</a>(node:&nbsp;framework.<a href="#Node">Node</a>,&nbsp;jobs:&nbsp;list)<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Crosspoint-__init__"><strong>__init__</strong></a>(self, node: framework.Node, jobs: list)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'Jobs': &lt;class 'list'&gt;, 'Nodeobj': &lt;class 'framework.Node'&gt;}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Edge">class <strong>Edge</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Edge">Edge</a>(i:&nbsp;int,&nbsp;j:&nbsp;int,&nbsp;capacity:&nbsp;int&nbsp;=&nbsp;1,&nbsp;owners:&nbsp;list&nbsp;=&nbsp;[])<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Edge-__init__"><strong>__init__</strong></a>(self, i: int, j: int, capacity: int = 1, owners: list = [])</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'Capacity': &lt;class 'int'&gt;, 'I': &lt;class 'framework.Node'&gt;, 'J': &lt;class 'framework.Node'&gt;, 'Owners': &lt;class 'list'&gt;, 'Reservations': &lt;class 'int'&gt;}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Layout">class <strong>Layout</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Layout">Layout</a>(x:&nbsp;int,&nbsp;y:&nbsp;int,&nbsp;nodecapacity:&nbsp;int&nbsp;=&nbsp;1,&nbsp;edgecapacity:&nbsp;int&nbsp;=&nbsp;1)<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Layout-__init__"><strong>__init__</strong></a>(self, x: int, y: int, nodecapacity: int = 1, edgecapacity: int = 1)</dt></dl>
+
+<dl><dt><a name="Layout-get_cell"><strong>get_cell</strong></a>(self, row: int, col: int) -&gt; framework.Node</dt><dd><tt>gets&nbsp;cells&nbsp;in&nbsp;specified&nbsp;row&nbsp;and&nbsp;column<br>
+&nbsp;<br>
+helper&nbsp;function&nbsp;that&nbsp;returns&nbsp;<a href="#Node">Node</a>&nbsp;based&nbsp;on&nbsp;grid-based&nbsp;logic&nbsp;instead&nbsp;of&nbsp;continous&nbsp;indexing<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;row&nbsp;(int):&nbsp;row&nbsp;index&nbsp;of&nbsp;requested&nbsp;node<br>
+&nbsp;&nbsp;&nbsp;&nbsp;col&nbsp;(int):&nbsp;column&nbsp;index&nbsp;pf&nbsp;requested&nbsp;node<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;cell&nbsp;node&nbsp;(<a href="#Node">Node</a>):&nbsp;returns&nbsp;node&nbsp;in&nbsp;specified&nbsp;cell</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'Edges': &lt;class 'dict'&gt;, 'Nodes': &lt;class 'dict'&gt;, 'X': &lt;class 'int'&gt;, 'Y': &lt;class 'int'&gt;}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Node">class <strong>Node</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Node">Node</a>(id:&nbsp;int,&nbsp;capacity:&nbsp;int&nbsp;=&nbsp;1,&nbsp;owners:&nbsp;list&nbsp;=&nbsp;[])<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Node-__init__"><strong>__init__</strong></a>(self, id: int, capacity: int = 1, owners: list = [])</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'Capacity': &lt;class 'int'&gt;, 'ID': &lt;class 'int'&gt;, 'Owners': &lt;class 'list'&gt;, 'Reservations': &lt;class 'int'&gt;}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Segment">class <strong>Segment</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Segment">Segment</a>(edges:&nbsp;list,&nbsp;capacity:&nbsp;int&nbsp;=&nbsp;1)<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Segment-__init__"><strong>__init__</strong></a>(self, edges: list, capacity: int = 1)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'Capacity': &lt;class 'int'&gt;, 'Edges': &lt;class 'list'&gt;, 'Reservations': &lt;class 'int'&gt;}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Task">class <strong>Task</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Task">Task</a>(startdate:&nbsp;int,&nbsp;enddate:&nbsp;int,&nbsp;type:&nbsp;str,&nbsp;edges:&nbsp;list,&nbsp;speeds:&nbsp;list)<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Task-__init__"><strong>__init__</strong></a>(self, startdate: int, enddate: int, type: str, edges: list, speeds: list)</dt></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'CPChecked': &lt;class 'bool'&gt;, 'Crosspoints': &lt;class 'list'&gt;, 'Duedate': &lt;class 'int'&gt;, 'Edges': &lt;class 'list'&gt;, 'Speeds': &lt;class 'list'&gt;, 'Startdate': &lt;class 'int'&gt;, 'Transporter': &lt;class 'framework.Vehicle'&gt;, 'Type': &lt;class 'str'&gt;}</dl>
+
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Vehicle">class <strong>Vehicle</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Vehicle">Vehicle</a>(id:&nbsp;int,&nbsp;type:&nbsp;str)<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Vehicle-__init__"><strong>__init__</strong></a>(self, id: int, type: str)</dt></dl>
+
+<dl><dt><a name="Vehicle-assign_task"><strong>assign_task</strong></a>(self, edgetimes: list, nodetimes: list = []) -&gt; None</dt></dl>
+
+<dl><dt><a name="Vehicle-step"><strong>step</strong></a>(self) -&gt; list</dt><dd><tt>method&nbsp;facilitates&nbsp;one&nbsp;iteration&nbsp;of&nbsp;the&nbsp;agent-based&nbsp;simulation&nbsp;framework<br>
+&nbsp;<br>
+incorporates&nbsp;logic&nbsp;of&nbsp;vehicle&nbsp;moving&nbsp;ahead&nbsp;on&nbsp;its&nbsp;path<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;outcome&nbsp;(list):&nbsp;[jobcomplete&nbsp;(bool),&nbsp;srcnodeidx&nbsp;(int),&nbsp;snknodeindex&nbsp;(int)]</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<hr>
+Data and other attributes defined here:<br>
+<dl><dt><strong>__annotations__</strong> = {'ID': &lt;class 'int'&gt;, 'Job': &lt;built-in function any&gt;, 'Loc': &lt;built-in function any&gt;, 'Path_edges': &lt;class 'list'&gt;, 'Path_edgetimes': &lt;class 'list'&gt;, 'Time': &lt;class 'int'&gt;, 'Type': &lt;class 'str'&gt;}</dl>
+
+</td></tr></table></td></tr></table>
+</body></html>
