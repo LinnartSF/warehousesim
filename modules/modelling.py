@@ -11,7 +11,7 @@ import random
 class Model:
     """class used for modelling the vehicle interaction layout and routing
 
-    note: Tasks, Queued, Jobs must strictly be FIFO managed
+    note: Tasks, Queued, Jobs must strictly be FIFO manage
     
     """
 
@@ -153,9 +153,6 @@ class Model:
 
                 # append crosspoints to job, i.e. j.Crosspoints
                 # TODO
-
-                # TODO solve issue of currently not knowing if crosspoint is still relevant, might be in the past of a job, and in the future of another
-                # --> TODO add to job attributes and methods for updating past and future nodes, and update these in the vehicle movement section
 
                 # remember that this job has already been checked
                 j.CPCChecked = True

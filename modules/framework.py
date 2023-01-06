@@ -281,20 +281,22 @@ class Vehicle:
         # - is the next segment available? OR is the next edge available
         pass
 
-# class for modeling tasks
+# class for modelling tasks and jobs
 class Task: 
     """
     
     """
 
-    Startdate   :int
-    Duedate     :int
-    Type        :str     # vehicle type that is allowed
-    Edges       :list
-    Speeds      :list    # all edges have the same length
-    Transporter :Vehicle # vehicle currently executing tasks
-    Crosspoints :list    # crosspoints of this job
-    CPChecked   :bool    # used to indicate that this job has already been considered for cosspoint list
+    Startdate      :int
+    Duedate        :int
+    Type           :str       # vehicle type that is allowed
+    Edges          :list
+    Speeds         :list      # all edges have the same length
+    Nodes_history  :list      # nodes that have already be travelled 
+    Nodes_future   :list      # nodes yet to travel to
+    Transporter    :Vehicle   # vehicle currently executing tasks
+    Crosspoints    :list      # relevant crosspoints that this job runs through
+    CPChecked      :bool      # used to indicate that this job has already been considered for cosspoint list
 
     def __init__(self,
                  startdate :int,
@@ -312,6 +314,9 @@ class Task:
         self.Type = type
         self.Edges = edges
         self.Speeds = speeds
+        self.Nodes_history = []                                      # updated as result of vehicle movement
+        self.Nodes_future = [e.I for e in edges]                     # updated as result of vehicle movement
+        if len(edges)>0: self.Nodes_future.append(self.edges[-1].J)  # updated as result of vehicle movement
         self.Transporter = None
         self.Crosspoints = []
 
@@ -321,7 +326,7 @@ class Crosspoint:
     
     """
 
-    Nodeobj :Node  # node representing the crosspoint
+    Nodeobj :Node  # node representing the crosspoint 
     Jobs    :list  # contains list of all tasks that are running via this cross point
 
     def __init__(self,
