@@ -5,13 +5,14 @@ from ui import *
 import numpy as np
 
 import random
+import copy
 
 
 # class for building a vehicle routing simulation model
 class Model:
     """class used for modelling the vehicle interaction layout and routing
 
-    note: Tasks, Queued, Jobs must strictly be FIFO manage
+    note: Tasks, Queued, Jobs must strictly be FIFO managed
     
     """
 
@@ -126,7 +127,10 @@ class Model:
         """implements one incremental iteration of the simulation
 
         should only be called once model, its tasks, and its vehicles have fully been setup;
-        assumes that all vehicles are
+        step()-method makes several assumptions:
+        - assumes that all vehicles are managed centrally in Model class by calling step()-method (decentral implementation through step() method in Vehicle class)
+        - assumes that only activated tasks are added to .Jobs list of model instance
+        - every job in .Jobs list is already assigned to a vehicle
 
         Args:
             None
@@ -138,7 +142,7 @@ class Model:
 
         # TODO model logic currently does not make use of .Reservation attributes in Edge and Node instances
 
-        # note: task assignment is done externally in main run routine
+        # note: task assignment is done externally in main run routine, i.e. all jobs are 
 
         #############################################################################################################################################################
         # 1: update crosspoints list for new jobs
@@ -195,7 +199,16 @@ class Model:
 
         #############################################################################################################################################################
         # 2: schedule jobs by reserving edges and nodes 
-        # TODO
+        # TODO implement other sequencing strategies here; default logic implemented below
+        jobs = copy.copy(self.Jobs)
+        random.shuffle(jobs)       
+        for j in self.Jobs:
+
+            # check up to next crosspoint if this job can become edge owner
+            # TODO
+
+            # reserve by registering as edge owner up to next crosspoint, if possible
+            # TODO
 
         #############################################################################################################################################################
         # 3: execute vehicle movements (where possible), if vehicle is in a node it enters next edge, if edge is free: update path data; this step includes time consumption and consumes remaining edge time (if above zero)

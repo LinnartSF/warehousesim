@@ -32,7 +32,7 @@ class Node:
         self.Owners = owners
     
 
-# class for modeling (one directional) edges
+# class for modeling (one directional) edge
 class Edge:
     """
     
@@ -297,13 +297,15 @@ class Task:
     Transporter    :Vehicle   # vehicle currently executing tasks
     Crosspoints    :list      # relevant crosspoints that this job runs through
     CPChecked      :bool      # used to indicate that this job has already been considered for cosspoint list
+    Priority       :int       # optional attribute for specifying task (i.e. job) priority
 
     def __init__(self,
                  startdate :int,
                  enddate :int,
                  type :str,
                  edges :list,
-                 speeds :list
+                 speeds :list,
+                 priority :int = -1 # optional constructor arg
                 ):
         """
         
@@ -319,6 +321,7 @@ class Task:
         if len(edges)>0: self.Nodes_future.append(self.edges[-1].J)  # updated as result of vehicle movement
         self.Transporter = None
         self.Crosspoints = []
+        self.Priority = priority
 
 # class for modeling crosspoints
 class Crosspoint:
