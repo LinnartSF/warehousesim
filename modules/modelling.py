@@ -161,27 +161,31 @@ class Model:
                                 cp.Jobs.append(j)
 
                             j.CPCChecked = True
+                
+                if not j.CPCChecked:
 
-                    # check every future node and find all other jobs that have this node in their future as well
-                    if not j.CPCChecked:
+                    for n in j.Nodes_future:
 
-                        for oj in self.Jobs:
+                        # check every future node and find all other jobs that have this node in their future as well
+                        if not j.CPCChecked:
 
-                            if j == oj:
+                            for oj in self.Jobs:
 
-                                pass
+                                if j == oj:
 
-                            else:
+                                    pass
 
-                                for on in oj.Nodes_future:
+                                else:
 
-                                    if n == on: 
+                                    for on in oj.Nodes_future:
 
-                                        # create crosspoint and append to .Crosspoints list attribute
-                                        cp = Crosspoint(n, [j,oj])
-                                        j.Crosspoints.append(cp)
-                                        oj.Crosspoints.append(op)
-                                        self.Crosspoints.append(cp)
+                                        if n == on: 
+
+                                            # create crosspoint and append to .Crosspoints list attribute
+                                            cp = Crosspoint(node = n, jobs = [j,oj])
+                                            j.Crosspoints.append(cp)
+                                            oj.Crosspoints.append(cp)
+                                            self.Crosspoints.append(cp)
 
                 # remember that this job has already been checked
                 j.CPCChecked = True
