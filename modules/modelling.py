@@ -136,8 +136,11 @@ class Model:
         
         """
 
+        # TODO model logic currently does not make use of .Reservation attributes in Edge and Node instances
+
         # note: task assignment is done externally in main run routine
 
+        #############################################################################################################################################################
         # 1: update crosspoints list for new jobs
         for j in self.Jobs:
 
@@ -190,9 +193,11 @@ class Model:
                 # remember that this job has already been checked
                 j.CPCChecked = True
 
-        # 2: schedule jobs by reserving edges and nodes, and by assigning ownerships; considering cross points
+        #############################################################################################################################################################
+        # 2: schedule jobs by reserving edges and nodes 
         # TODO
 
+        #############################################################################################################################################################
         # 3: execute vehicle movements (where possible), if vehicle is in a node it enters next edge, if edge is free: update path data; this step includes time consumption and consumes remaining edge time (if above zero)
         # TODO decentralize this step in next sprint
         for v in self.Vehicles: # TODO implement order ordering types; so far sequential order implemented here to begin with
@@ -201,16 +206,20 @@ class Model:
             if type(v.Loc) == Node:
 
                 # is vehicle owner of next edge in path?
-                if v in v.Path_edges[0]:
+                if v in v.Path_edges[0].Owners:
 
                     # update vehicle location
                     v.Loc = v.Path_edges[0]
+
+                    # update node future and history
+                    if v.Loc.I == v.Job.Nodes_future[0]: v.Job.Nodes_history.append(v.Job.Nodes_future.pop(0))
 
             # all vehicles that are on a edge consume one time step of remaining dwell time on edge
             if type(v.Loc) == Edge:
 
                 v.Path_edgetimes -= 1 # consume one time step of dwell time on edge
 
+        #############################################################################################################################################################
         # 4: any vehicle that has completed its edge enters node at edge end, if node is free; update location attribute in all vehicles
         for v in self.Vehicles: # TODO allow for different ordering strategies here, instead of same vehicle sequence every time
 
@@ -229,6 +238,7 @@ class Model:
                         # remove therewith associated dwell time index
                         _ = v.Path_edgetimes.pop(0)
 
+        #############################################################################################################################################################
         # 5: write vehicle location data into layout
         for vi in range(0,len(self.Vehicles)):
 
@@ -279,6 +289,7 @@ class Model:
                 self.Results[self.Iteration+vi, 2] = x_i*2-1         # col
                 self.Results[self.Iteration+vi, 3] = y_i*2-1         # row
 
+        #############################################################################################################################################################
         # 6: check all jobs whether they have been completed; if so, pop them and make vehicle "idle" (empty Path_ lists), while mainting relevant location in location attribute of vehicle entrance
         for v in self.Vehicles:
 
@@ -303,5 +314,6 @@ class Model:
                     # set vehicle to "idle" (= .Job = None)
                     v.Job = None
 
+        #############################################################################################################################################################
         # 7: increment iteration counter
         self.Iteration += 1
