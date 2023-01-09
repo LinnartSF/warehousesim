@@ -147,12 +147,41 @@ class Model:
                 break
             
             else: 
-            
-                # find additional crosspoints and add to model list
-                # TODO extract list of nodes in this jobs path
 
-                # append crosspoints to job, i.e. j.Crosspoints
-                # TODO
+                # find additional cross points for every node in jobs future node list
+                for n in j.Nodes_future:
+
+                    # first, check if job should be registered at existing crosspoints
+                    for cp in self.Crosspoints:
+
+                        if n == cp.Nodeobj:
+                            
+                            if j not in cp.Jobs:
+                                
+                                cp.Jobs.append(j)
+
+                            j.CPCChecked = True
+
+                    # check every future node and find all other jobs that have this node in their future as well
+                    if not j.CPCChecked:
+
+                        for oj in self.Jobs:
+
+                            if j == oj:
+
+                                pass
+
+                            else:
+
+                                for on in oj.Nodes_future:
+
+                                    if n == on: 
+
+                                        # create crosspoint and append to .Crosspoints list attribute
+                                        cp = Crosspoint(n, [j,oj])
+                                        j.Crosspoints.append(cp)
+                                        oj.Crosspoints.append(op)
+                                        self.Crosspoints.append(cp)
 
                 # remember that this job has already been checked
                 j.CPCChecked = True

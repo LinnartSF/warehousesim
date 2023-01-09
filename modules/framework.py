@@ -282,7 +282,7 @@ class Vehicle:
         pass
 
 # class for modelling tasks and jobs
-class Task: 
+class Task:
     """
     
     """
@@ -319,6 +319,29 @@ class Task:
         if len(edges)>0: self.Nodes_future.append(self.edges[-1].J)  # updated as result of vehicle movement
         self.Transporter = None
         self.Crosspoints = []
+
+    def check_nodevisit(self) -> None:
+        """checks if next node in path can be enterede
+
+        method is responsible for checking if nextnode in Nodes_future can be accessed, and if so, popping it from Nodes_future and appending it to Nodes_history
+        method must only be called if it is feasible to enter node at this point, i.e. e.g. when edge dwell time has been fully consumed
+        method must only be called if there is a node that can be entered
+
+        Args:
+            None
+        
+        Returns:
+            visit (bool): True if node was entered and thus visited, or False otherwise
+
+        """
+
+        if self.Transporter in self.Nodes_future[0].Owners:
+
+            self.Nodes_history.append(self.Nodes_future.pop(0))
+
+            return True
+
+        return False
 
 # class for modeling crosspoints
 class Crosspoint:
