@@ -1,8 +1,10 @@
 """
 
 module provides a library of predefined object classes
-
 module can be consumed for simulation modelling
+
+__author__ = "Linnart Felkl"
+__email__ = "linnartsf@gmail.com"
 
 """
 

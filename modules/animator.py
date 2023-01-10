@@ -2,6 +2,9 @@
 
 this module contains pre-defined visualization and animation functions that can be consumed by main routine
 
+__author__ = "Linnart Felkl"
+__email__ = "linnartsf@gmail.com"
+
 """
 
 from modelling import *

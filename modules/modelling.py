@@ -1,3 +1,13 @@
+"""
+
+this module mainly contains the Model class
+main simulation control can be implemented centrally in this module by adjusting the Model class' step()-method
+
+__author__ = "Linnart Felkl"
+__email__ = "linnartsf@gmail.com"
+
+"""
+
 from framework import *
 from strategies import *
 from ui import *
@@ -90,6 +100,7 @@ class Model:
         
         should be called at the beginning after setting up model, before running model; 
         tasks should be added in sequence, in accordance with their earliest start date
+        .Tasks attribute list is just a record of all tasks to be executed, and should later be turned into jobs
 
         Args:
             startdate (int): earliest time this job can move
@@ -121,6 +132,28 @@ class Model:
                  ))
             
             return False
+    
+    def convert_task_to_job(
+                            self,
+                            task: Task,
+                            vehicle: Vehicle
+                           ) -> None:
+        """converts task into active job and assigns to vehicle
+
+        helper function that removes task from .Tasks list and adds it to active .Jobs list, and also assigns it to specified vehicle,
+        if task edge list start point deviates from current vehicle, this method calcualetes the remaining edges to that start point and adds them to the path list of the job
+
+        Args:
+            task (Task):
+            vehicle (Vehicle):
+        
+        Returns:
+            None
+
+        """
+
+        # TODO implement
+        pass
         
     def step(self) -> None:
         """implements one incremental iteration of the simulation
@@ -139,7 +172,7 @@ class Model:
         
         """
 
-        # TODO model logic currently does not make use of .Reservation attributes in Edge and Node instances
+        # node: model logic currently does not make use of .Reservation attributes in Edge and Node instances
 
         # note: task assignment is done externally in main run routine, i.e. all jobs are 
 
