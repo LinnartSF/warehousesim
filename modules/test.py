@@ -25,9 +25,16 @@ m = Model(
 _ = [m.add_vehicle(i,"agv") for i in range(3)]
 
 # register tasks
-pass
+# TODO
 
 # main routine (simulation)
+while m.Iteration < m.Iterations:
+
+    # check for jobs release, assign jobs to vehicles etc
+    # TODO
+
+    # simulate one step
+    m.step()
 
 # produce animation
 anim_vehicles(
