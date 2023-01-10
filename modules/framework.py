@@ -7,7 +7,7 @@ module can be consumed for simulation modelling
 """
 
 
-# class for modelling nodes
+# class for modeling nodes
 class Node:
     """
     
@@ -17,6 +17,7 @@ class Node:
     Capacity     :int  # number of agvs that can fit into node
     Owners       :list # list of vehicles that reserved this node and "own" it
     ID           :int  # node index
+    Crosspoint   :any  # linked crosspoint reference, if node is crosspoint (otherwise None)
 
     def __init__(self,
                  id : int,
@@ -30,7 +31,8 @@ class Node:
         self.ID = id
         self.Capacity = capacity
         self.Owners = owners
-    
+        
+        self.Crosspoint = None
 
 # class for modeling (one directional) edge
 class Edge:

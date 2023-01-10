@@ -7,7 +7,6 @@ import numpy as np
 import random
 import copy
 
-
 # class for building a vehicle routing simulation model
 class Model:
     """class used for modelling the vehicle interaction layout and routing
@@ -193,6 +192,7 @@ class Model:
                                             j.Crosspoints.append(cp)
                                             oj.Crosspoints.append(cp)
                                             self.Crosspoints.append(cp)
+                                            cp.Node.Crosspoint = cp
 
                 # remember that this job has already been checked
                 j.CPCChecked = True
@@ -205,12 +205,40 @@ class Model:
         for j in self.Jobs:
 
             # check up to next crosspoint if this job can become edge owner
-            # TODO
+            if type(j.Transporter.Loc) == Edge: 
+
+                # is target node still "reservable"? or is this vehicle already owner
+                if j.Transporter.Path_edges[0].J.Capacity > len(j.Transporter.Path_edges[0].J.Owners) or j.Transporter in j.Transpoter.Path_edges[0].J.Owners:
+
+                    if j.Transporter not in j.Transpoter.Path_edges[0].J.Owners: 
+                    
+                        # reserve node (register as owner)
+                        j.Transpoter.Path_edges[0].J.Owners.append(j.Transporter)
+                
+                    # enter a loop reserving up until end or next crosspoint
+                    if j.Transporter.Path_edges[0].J.Node.Crosspoint == None: # first node is not a crosspoint
+
+                        # TODO if not, enter loop until crosspointor or last node and register as owner
+                        if len(j.Transporter.Path_edges) > 1:
+
+                        for e in j.Transporter.Path_edges[1:]:
+
+                            # TODO 
+                            pass
+                    
+                    # no either reached end of path and reserved all edges and nodes, or up until next crosspoint
+                    # TODO implement additional logic here
+            
+            else:
+
+                # currently located on node
 
             # reserve by registering as edge owner up to next crosspoint, if possible
             # TODO
 
         #############################################################################################################################################################
+        # TODO make sure that when moving from edge to node or from node to edge, vehicle is removed as owner from the node or edge that has been exited
+
         # 3: execute vehicle movements (where possible), if vehicle is in a node it enters next edge, if edge is free: update path data; this step includes time consumption and consumes remaining edge time (if above zero)
         # TODO decentralize this step in next sprint
         for v in self.Vehicles: # TODO implement order ordering types; so far sequential order implemented here to begin with
@@ -315,11 +343,15 @@ class Model:
 
                         cp.Jobs.remove(v.Job)
                         v.Job.Crosspoints.remove(cp)
+                        cp.Node.Crosspoint = None
 
                     # remove crosspoints that are no longer cross points
                     for cp in self.Crosspoints:
 
-                        if len(cp.Jobs) < 2: self.Crosspoints.remove(cp)
+                        if len(cp.Jobs) < 2: 
+                            
+                            self.Crosspoints.remove(cp)
+                            cp.Node.Crosspoint = None
 
                     # remove job from job list 
                     self.Jobs.remove(v.Job)
