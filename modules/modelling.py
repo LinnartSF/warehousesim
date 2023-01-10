@@ -329,7 +329,7 @@ class Model:
                         _ = v.Path_edgetimes.pop(0)
 
         #############################################################################################################################################################
-        # 5: write vehicle location data into layout
+        # 5: write vehicle location data into .Results attribute (allowing for animations lateron)
         for vi in range(0,len(self.Vehicles)):
 
             v = self.Vehicles[vi]
