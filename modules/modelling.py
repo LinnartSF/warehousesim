@@ -205,7 +205,7 @@ class Model:
         for j in self.Jobs:
 
             # check up to next crosspoint if this job can become edge owner
-            if type(j.Transporter.Loc) == Edge: 
+            if type(j.Transporter.Loc) == Edge: # VEHICLE CURRENTLY LOCATED ON EDGE
 
                 # is target node still "reservable"? or is this vehicle already owner
                 if j.Transporter.Path_edges[0].J.Capacity > len(j.Transporter.Path_edges[0].J.Owners) or j.Transporter in j.Transpoter.Path_edges[0].J.Owners:
@@ -218,27 +218,70 @@ class Model:
                     # enter a loop reserving up until end or next crosspoint
                     if j.Transporter.Path_edges[0].J.Node.Crosspoint == None: # first node is not a crosspoint
 
-                        # TODO if not, enter loop until crosspointor or last node and register as owner
+                        # if not enter loop until crosspoint or last node and register as owner, or until capacity does no longer suffice
                         if len(j.Transporter.Path_edges) > 1:
 
-                        for e in j.Transporter.Path_edges[1:]:
+                            for e in j.Transporter.Path_edges[1:]:
+                                
+                                # register as owner of edge, if applicable
+                                if e.Capacity > len(e.Owners) or j.Transporter in e.Owners:
 
-                            # TODO 
-                            pass
-                    
-                    # no either reached end of path and reserved all edges and nodes, or up until next crosspoint
-                    # TODO implement additional logic here
+                                    if j.Transporter not in e.Owners: 
+                                        
+                                        e.Owners.append(j.Transporter)
+                                
+                                else:
+
+                                    break
+
+                                # register as owner of node, if applicable
+                                if e.J.Capacity > len(e.J.Owners) or j.Transporter in e.J.Owners:
+
+                                    if j.Transporter not in e.J.Owners: 
+                                        
+                                        e.J.Owners.append(j.Transporter)
+                                
+                                else:
+
+                                    break
+                                
+                                # stop here if crosspoint is reached (only schedule vehicles up until crosspoints)
+                                if e.J.Crosspoint == None:
+
+                                    break
             
-            else:
+            else: # VEHICLE CURRENTLY HOLDING ON NODE
 
-                # currently located on node
+                for e in j.Transporter.Path_edges:
+                                
+                    # register as owner of edge, if applicable
+                    if e.Capacity > len(e.Owners) or j.Transporter in e.Owners:
 
-            # reserve by registering as edge owner up to next crosspoint, if possible
-            # TODO
+                        if j.Transporter not in e.Owners: 
+                                        
+                            e.Owners.append(j.Transporter)
+                                
+                        else:
 
+                            break
+
+                        # register as owner of node, if applicable
+                        if e.J.Capacity > len(e.J.Owners) or j.Transporter in e.J.Owners:
+
+                            if j.Transporter not in e.J.Owners: 
+                                        
+                                e.J.Owners.append(j.Transporter)
+                                
+                            else:
+
+                                break
+                                
+                            # stop here if crosspoint is reached (only schedule vehicles up until crosspoints)
+                            if e.J.Crosspoint == None:
+
+                                break
+        
         #############################################################################################################################################################
-        # TODO make sure that when moving from edge to node or from node to edge, vehicle is removed as owner from the node or edge that has been exited
-
         # 3: execute vehicle movements (where possible), if vehicle is in a node it enters next edge, if edge is free: update path data; this step includes time consumption and consumes remaining edge time (if above zero)
         # TODO decentralize this step in next sprint
         for v in self.Vehicles: # TODO implement order ordering types; so far sequential order implemented here to begin with
@@ -248,6 +291,9 @@ class Model:
 
                 # is vehicle owner of next edge in path?
                 if v in v.Path_edges[0].Owners:
+                    
+                    # no longer owner of node that is now exited by vehicle
+                    if v in v.Loc.Owners: v.Loc.Owners.remove(v)
 
                     # update vehicle location
                     v.Loc = v.Path_edges[0]
@@ -269,6 +315,9 @@ class Model:
                 if v.Path_edgetimes[0] <= 0:
 
                     if v in v.Path_edges[0].J.Owners:
+
+                        # no longer owner of edge that will now be exited
+                        v.Loc.Owners.remove(v)
 
                         # update vehicle location to now be located in node
                         v.Loc = v.Path_edges[0].J
