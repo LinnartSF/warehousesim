@@ -68,8 +68,32 @@ class Model:
 
         self.Grid = Layout(columns, rows, nodecapacity, edgecapacity)
 
-        # prepopulate animation data template (col1 for simulation time, col2 for vehicle position col (x), col3 for vehicle position row (y), col4 for number of vehicles
-        self.Results = None   # create predefined ndarray with numpy for every vehicle added
+        # prepopulate animation data template 
+        self.Results = None   # (col1 simtime, col2 posx (col), col3 posy (row), col4 for number of vehicles
+    
+    def get_edges(self, 
+                  nodeseq: list
+                 ) -> list:
+        """returns edge indices, derived from node sequence
+
+        this returns a list with all edges, derived from the forwarded node index sequence
+        edge indices are derived from the input node sequence, and used to access and return list of related Edge object
+
+        Args:
+            nodeseq (list): sequence of nodes for which edges are to be derived (ints)
+    
+        Returns:
+            edgeseq (list): list of derived edges
+
+        """
+
+        edgeidxs = []
+
+        for i in range(0,len(nodeseq)-1):
+
+            edgeidxs.append((nodeseq[i], nodeseq[i+1]))
+
+        return [self.Grid.Edges[idx] for idx in edgeidxs]
     
     def add_vehicle(self,
                     id: int,
@@ -240,15 +264,15 @@ class Model:
             if type(j.Transporter.Loc) == Edge: # VEHICLE CURRENTLY LOCATED ON EDGES
 
                 # is target node still "reservable"? or is this vehicle already owner
-                if j.Transporter.Path_edges[0].J.Capacity > len(j.Transporter.Path_edges[0].J.Owners) or j.Transporter in j.Transpoter.Path_edges[0].J.Owners:
+                if j.Transporter.Path_edges[0].J.Capacity > len(j.Transporter.Path_edges[0].J.Owners) or j.Transporter in j.Transporter.Path_edges[0].J.Owners:
 
-                    if j.Transporter not in j.Transpoter.Path_edges[0].J.Owners: 
+                    if j.Transporter not in j.Transporter.Path_edges[0].J.Owners: 
                     
                         # reserve node (register as owner)
-                        j.Transpoter.Path_edges[0].J.Owners.append(j.Transporter)
+                        j.Transporter.Path_edges[0].J.Owners.append(j.Transporter)
                 
                     # enter a loop reserving up until end or next crosspoint
-                    if j.Transporter.Path_edges[0].J.Node.Crosspoint == None: # first node is not a crosspoint
+                    if j.Transporter.Path_edges[0].J.Crosspoint == None: # first node is not a crosspoint
 
                         # if not enter loop until crosspoint or last node and register as owner, or until capacity does no longer suffice
                         if len(j.Transporter.Path_edges) > 1:
@@ -317,7 +341,7 @@ class Model:
         # 3: execute vehicle movements (where possible), if vehicle is in a node it enters next edge, if edge is free: update path data; this step includes time consumption and consumes remaining edge time (if above zero)
         # TODO decentralize this step in next sprint
         for v in self.Vehicles: # TODO implement order ordering types; so far sequential order implemented here to begin with (without using strategies.py)
-            
+
             # only consider "busy" vehicles
             if len(v.Path_edges) > 0:
             
@@ -339,7 +363,7 @@ class Model:
                 # all vehicles that are on a edge consume one time step of remaining dwell time on edge
                 if type(v.Loc) == Edge:
 
-                    v.Path_edgetimes -= 1 # consume one time step of dwell time on edge
+                    v.Path_edgetimes[0] -= 1 # consume one time step of dwell time on edge
 
         #############################################################################################################################################################
         # 4: any vehicle that has completed its edge enters node at edge end, if node is free; update location attribute in all vehicles
@@ -378,7 +402,7 @@ class Model:
 
                 # vehicle currently located on edge
                 i = v.Loc.I.ID
-                j = v.Lov.J.ID
+                j = v.Loc.J.ID
 
                 x_i = i//self.Grid.Y + 1
                 x_j = j//self.Grid.Y + 1

@@ -54,8 +54,10 @@ def assign(m: Model) -> None:
                 if v.Loc == ref:
 
                     # assign job to vehicle
-                    v.Job = t
-                    t.Transporter = v
+                    v.Job = t                               # critical
+                    v.Path_edges = t.Edges                  # critical
+                    v.Path_edgetimes = t.Speeds             # critical
+                    t.Transporter = v                       # critical
                     m.Jobs.append(t)
                     m.Tasks.remove(t)
                 

@@ -19,8 +19,6 @@ import copy
 import strategies as s
 import util as u
 
-from operator import itemgetter
-
 # model setup
 m = Model(
             iterations = 50, 
@@ -40,7 +38,7 @@ m.add_task(
     startdate = 10, 
     duedate = 23, 
     type = "agv", 
-    edges = itemgetter(u.get_edges((1,2,3,4,5,6,7,8,38,68,67)))(m.Grid.Edges), 
+    edges = m.get_edges((1,2,3,4,5,6,7,8,38,68,67)),
     speeds = [2,2,2,2,1,3,2,1,1,1,2]
 )
 
@@ -52,6 +50,9 @@ while m.Iteration < m.Iterations:
 
     # simulate step
     m.step()
+
+# testing
+print(m.Results)
 
 # produce animation
 anim_vehicles(
