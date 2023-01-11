@@ -62,5 +62,5 @@ def assign(m: Model) -> None:
                 
                 else:
 
-                    # add edges until task path initial edge
+                    # add edges until task path initial
                     print("WARNING this is not implemented in test.py yet!")

@@ -9,7 +9,6 @@ __email__ = "linnartsf@gmail.com"
 """
 
 from framework import *
-from strategies import *
 from ui import *
 
 import numpy as np
@@ -232,13 +231,13 @@ class Model:
 
         #############################################################################################################################################################
         # 2: schedule jobs by reserving edges and nodes 
-        # TODO implement other sequencing strategies here; default logic implemented below
+        # TODO implement other sequencing strategies here; default logic implemented below (without using strategies.py)
         jobs = copy.copy(self.Jobs)
         random.shuffle(jobs)       
         for j in self.Jobs:
 
             # check up to next crosspoint if this job can become edge owner
-            if type(j.Transporter.Loc) == Edge: # VEHICLE CURRENTLY LOCATED ON EDGE
+            if type(j.Transporter.Loc) == Edge: # VEHICLE CURRENTLY LOCATED ON EDGES
 
                 # is target node still "reservable"? or is this vehicle already owner
                 if j.Transporter.Path_edges[0].J.Capacity > len(j.Transporter.Path_edges[0].J.Owners) or j.Transporter in j.Transpoter.Path_edges[0].J.Owners:
@@ -317,7 +316,7 @@ class Model:
         #############################################################################################################################################################
         # 3: execute vehicle movements (where possible), if vehicle is in a node it enters next edge, if edge is free: update path data; this step includes time consumption and consumes remaining edge time (if above zero)
         # TODO decentralize this step in next sprint
-        for v in self.Vehicles: # TODO implement order ordering types; so far sequential order implemented here to begin with
+        for v in self.Vehicles: # TODO implement order ordering types; so far sequential order implemented here to begin with (without using strategies.py)
 
             # current location is a Node?
             if type(v.Loc) == Node:
@@ -341,7 +340,7 @@ class Model:
 
         #############################################################################################################################################################
         # 4: any vehicle that has completed its edge enters node at edge end, if node is free; update location attribute in all vehicles
-        for v in self.Vehicles: # TODO allow for different ordering strategies here, instead of same vehicle sequence every time
+        for v in self.Vehicles: # TODO allow for different ordering strategies here, instead of same vehicle sequence every time (without using strategies.py)
 
             if v.Job:
 
