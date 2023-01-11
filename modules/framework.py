@@ -179,7 +179,7 @@ class Layout:
                         self.Edges[((x-1)*y+j, (x-1)*y+j+1)] = Edge(self.Nodes[(x-1)*y+j], self.Nodes[(x-1)*y+j+1], capacity = edgecapacity)
 
                         self.Edges[((x-1)*y+j, (x-2)*y+j)] = Edge(self.Nodes[(x-1)*y+j], self.Nodes[(x-2)*y+j], capacity = edgecapacity)
-
+                        
                         self.Edges[((x-1)*y+j, (x)*y+j)] = Edge(self.Nodes[(x-1)*y+j], self.Nodes[(x)*y+j], capacity = edgecapacity)
 
                     
