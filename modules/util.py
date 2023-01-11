@@ -7,7 +7,7 @@ __email__ = "LinnartSF@gmail.com"
 
 """
 
-def get_edges(nodeseq: list) -> list:
+def get_edges(nodeseq: list) -> tuple:
     """returns edge indices, derived from node sequence
 
     this function returns edge indices, derived from the forwarded node index sequence
@@ -27,5 +27,5 @@ def get_edges(nodeseq: list) -> list:
     for i in range(0,len(nodeseq)-1):
 
         edges.append((nodeseq[i], nodeseq[i+1]))
-    
+
     return edges

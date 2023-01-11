@@ -4,4 +4,5 @@ python -m pydoc -w modules\modelling
 python -m pydoc -w modules\ui
 python -m pydoc -w modules\test
 python -m pydoc -w modules\strategies
+python -m pydoc -w modules\util
 move *.html docs

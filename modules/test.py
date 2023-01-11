@@ -40,7 +40,7 @@ m.add_task(
     startdate = 10, 
     duedate = 23, 
     type = "agv", 
-    edges = itemgetter(u.get_edges(1,2,3,4,5,6,7,8,38,48,47))(m.Grid.Edges), 
+    edges = itemgetter(u.get_edges((1,2,3,4,5,6,7,8,38,68,67)))(m.Grid.Edges), 
     speeds = [2,2,2,2,1,3,2,1,1,1,2]
 )
 
