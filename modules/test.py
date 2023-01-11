@@ -10,9 +10,13 @@ __email__ = "linnartsf@gmail.com"
 
 from modelling import *
 from framework import *
-from strategies import *
 from ui import *
 from animator import *
+
+import random
+import copy
+
+import strategies
 
 # model setup
 m = Model(
@@ -21,17 +25,59 @@ m = Model(
             columns = 30
         )
 
-# add vehicle park
-_ = [m.add_vehicle(i,"agv") for i in range(3)]
+# add vehicles
+nodes = copy.copy(m.Grid.Nodes)
+random.shuffle(nodes)
 
-# register tasks
-# TODO
+m.add_vehicle(
+    id = 1,
+    type = "agv", 
+    loc = nodes[1]
+)
+
+m.add_vehicle(
+    id = 2,
+    type = "agv",
+    loc = nodes[21]
+)
+
+m.add_vehicle(
+    id = 3,
+    type = "agv",
+    loc = nodes[9]
+)
+
+
+# register task (note: tasks should be appended in startdate order)
+m.add_task(
+    startdate = 1, 
+    duedate = 23, 
+    type = "agv", 
+    edges = m.Grid.Edges[(1,2),(2,3),(3,4),(4,5)], 
+    speeds = [2,2,2,2]
+)
+
+m.add_task(
+    startdate = 3,
+    duedate = 27,
+    type = "agv",
+    edges = m.Grid.Edges[(21,23),(23,24),(24,25),(25,26)],
+    speeds = [1,1,3,3]
+)
+
+m.add_task(
+    startdate = 5,
+    duedate = 50,
+    type = "agv",
+    edges = m.Grid.Edges[(9,10),(10,11),(11,12),(12,13)],
+    speeds = [1,1,3,3]
+)
 
 # main routine (simulation)
 while m.Iteration < m.Iterations:
 
-    # check for jobs release, assign jobs to vehicles etc
-    # TODO
+    # check for jobs release, assign jobs to vehicle
+    strategies.assign(m)
 
     # simulate one step
     m.step()

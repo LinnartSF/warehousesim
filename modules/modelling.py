@@ -29,7 +29,7 @@ class Model:
     Iterations  :int
     Iteration   :int
     Vehicles    :list
-    Tasks       :dict       # all tasks that are not ready for dispatch yet (FIFO management)
+    Tasks       :list       # all tasks that are not ready for dispatch yet (FIFO management)
     Jobs        :list       # jobs are dispatched tasks, i.e. activated tasks that have already been assigned to vehicles (hence "jobs") (FIFO management)
     Crosspoints :list       # list of crosspoints in the model
     Results     :np.ndarray # container for animation, should contain animation for every iteration, for every vehicle, with columns simtime,vehiclename,xpos,ypos (4 columns)
@@ -75,7 +75,7 @@ class Model:
     def add_vehicle(self,
                     id: int,
                     type: str,
-                    loc: Edge = None # TODO check if it doesnt make more sense to locate every vehicle at one edge, first
+                    loc: any = None # TODO check if it doesnt make more sense to locate every vehicle at one edge or node, first
                    ) -> None:
         """
         
@@ -94,7 +94,7 @@ class Model:
                 type :str,
                 edges :list,
                 speeds :list, 
-                assignment :bool
+                assignment :bool = False
                 ) -> bool:
         """method for adding tasks to model
         

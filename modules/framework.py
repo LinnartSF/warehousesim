@@ -114,21 +114,21 @@ class Layout:
         self.Nodes = {}
         self.Edges = {}
 
-        # setup nodes dictionary
+        # SETUP NODES DICTIONARY
         for i in range(x):
 
             for j in range(y):
 
                 self.Nodes[(i)*y+(j+1)] = Node(id = (i)*y+(j+1), capacity = nodecapacity)
         
-        # setup edges
+        # SETUP EDGES
         for i in range(1, x+1):
 
             for j in range(1, y+1):
 
-                if i == 1:      # first column
+                if i == 1:      # FIRST COLUMN
 
-                    if j == 1:  # first row
+                    if j == 1:  # FIRST ROW
 
                         if y > 1: 
                             
@@ -138,7 +138,7 @@ class Layout:
                             
                             self.Edges[(1, y+1)] = Edge(self.Nodes[1], self.Nodes[y+1], capacity = edgecapacity)
 
-                    elif j == y: # last row
+                    elif j == y: # LAST ROW
                         
                         self.Edges[(j, j-1)] = Edge(self.Nodes[j], self.Nodes[j-1], capacity = edgecapacity)
 
@@ -153,14 +153,14 @@ class Layout:
 
                         self.Edges[(j, j+y)] = Edge(self.Nodes[j], self.Nodes[j+y], capacity = edgecapacity)
                 
-                elif i == x:      # last column
+                elif i == x:      # LAST COLUMN
                 
-                    if j == 1:    # first row
+                    if j == 1:    # FIRST ROW
                         
                         self.Edges[((x-1)*y + 1, (x-2)*y+1)] = Edge(self.Nodes[(x-1)*y+1], self.Nodes[(x-2)*y+1], capacity = edgecapacity)
                         self.Edges[((x-1)*y + 1, (x-1)*y+2)] = Edge(self.Nodes[(x-1)*y+1], self.Nodes[(x-1)*y+2], capacity = edgecapacity)
                     
-                    elif j == y:  # last
+                    elif j == y:  # LAST
 
                         self.Edges[(x*y, x*y-1)] = Edge(self.Nodes[x*y], self.Nodes[x*y-1], capacity = edgecapacity)
                         self.Edges[(x*y, (x-1)*y)] = Edge(self.Nodes[x*y], self.Nodes[(x-1)*y], capacity = edgecapacity)
@@ -174,7 +174,7 @@ class Layout:
 
                 else:
 
-                    if j == 1:   # first row
+                    if j == 1:   # FIRST ROW
                         
                         self.Edges[((x-1)*y+j, (x-1)*y+j+1)] = Edge(self.Nodes[(x-1)*y+j], self.Nodes[(x-1)*y+j+1], capacity = edgecapacity)
 
@@ -183,7 +183,7 @@ class Layout:
                         self.Edges[((x-1)*y+j, (x)*y+j)] = Edge(self.Nodes[(x-1)*y+j], self.Nodes[(x)*y+j], capacity = edgecapacity)
 
                     
-                    elif j == y:  # last row
+                    elif j == y:  # LAST ROW
                     
                         self.Edges[((x-1)*y+j, (x-1)*y+j-1)] = Edge(self.Nodes[(x-1)*y+j], self.Nodes[(x-1)*y+j-1], capacity = edgecapacity)
 
@@ -231,7 +231,7 @@ class Vehicle:
     Path_edges       :list    # 1D list of one directional edges in trajectory order
     Path_edgetimes   :list    # 1D list of movement durations per edge, with second dimensions grouping into segments in accordance with path_nodes attribute
     Loc              :any     # reference to the current location, can be Edge or Node
-    Time             :int     # remaining "dwell time" on current edge
+    Time             :int     # remaining "dwell time" on current edge # TODO NOT USED AT THE MOMENT!
     Type             :str     # specifies vehicle type (tasks may only be executed by appropriate vehicle type
     Job              :any     # job assigned to vehicle
 
@@ -247,7 +247,7 @@ class Vehicle:
         self.Path_edges = []
         self.Path_edgetimes = []
         self.Loc = None
-        self.Time = 0
+        self.Time = 0 # TODO note: not used at the moment!
         self.Type = type
         self.Job = None # must be assigned when task is mapped to vehicle
     
