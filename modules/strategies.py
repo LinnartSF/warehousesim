@@ -25,7 +25,7 @@ def assign(m: Model) -> None:
         None
     
     """
-
+    
     # check for jobs release, assign jobs to vehicle
     for t in m.Tasks:
 
@@ -46,12 +46,11 @@ def assign(m: Model) -> None:
                 if type(v.Loc) == Node:
 
                     ref = t.Edges[0].I
-                    
 
                 elif type(v.Loc) == Edge:
 
                     ref = t.Edges[0]
-                
+
                 if v.Loc == ref:
 
                     # assign job to vehicle

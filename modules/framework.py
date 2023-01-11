@@ -231,7 +231,7 @@ class Vehicle:
     Path_edges       :list    # 1D list of one directional edges in trajectory order
     Path_edgetimes   :list    # 1D list of movement durations per edge, with second dimensions grouping into segments in accordance with path_nodes attribute
     Loc              :any     # reference to the current location, can be Edge or Node
-    Time             :int     # remaining "dwell time" on current edge # TODO NOT USED AT THE MOMENT!
+    Time             :int     # remaining "dwell time" on current edge #TODO not used at the moment!!
     Type             :str     # specifies vehicle type (tasks may only be executed by appropriate vehicle type
     Job              :any     # job assigned to vehicle
 
@@ -293,14 +293,14 @@ class Task:
 
     Startdate      :int
     Duedate        :int
-    Type           :str       # vehicle type that is allowed
+    Type           :str       # vehicle type allowed for this task
     Edges          :list
     Speeds         :list      # all edges have the same length
     Nodes_history  :list      # nodes that have already be travelled 
     Nodes_future   :list      # nodes yet to travel to
     Transporter    :Vehicle   # vehicle currently executing tasks
     Crosspoints    :list      # relevant crosspoints that this job runs through
-    CPChecked      :bool      # used to indicate that this job has already been considered for cosspoint list
+    CPCChecked     :bool      # used to indicate that this job has already been considered for cosspoint list
     Priority       :int       # optional attribute for specifying task (i.e. job) priority
 
     def __init__(self,
@@ -322,10 +322,11 @@ class Task:
         self.Speeds = speeds
         self.Nodes_history = []                                      # updated as result of vehicle movement
         self.Nodes_future = [e.I for e in edges]                     # updated as result of vehicle movement
-        if len(edges)>0: self.Nodes_future.append(self.edges[-1].J)  # updated as result of vehicle movement
+        if len(edges)>0: self.Nodes_future.append(self.Edges[-1].J)  # updated as result of vehicle movement
         self.Transporter = None
         self.Crosspoints = []
         self.Priority = priority
+        self.CPCChecked = False
 
 # class for modeling crosspoints
 class Crosspoint:
@@ -334,7 +335,7 @@ class Crosspoint:
     """
 
     Nodeobj :Node  # node representing the crosspoint 
-    Jobs    :list  # contains list of all tasks that are running via this cross point
+    Jobs    :list  # contains list of all tasks that are running via this crosspoint
 
     def __init__(self,
                  node: Node,

@@ -317,32 +317,35 @@ class Model:
         # 3: execute vehicle movements (where possible), if vehicle is in a node it enters next edge, if edge is free: update path data; this step includes time consumption and consumes remaining edge time (if above zero)
         # TODO decentralize this step in next sprint
         for v in self.Vehicles: # TODO implement order ordering types; so far sequential order implemented here to begin with (without using strategies.py)
+            
+            # only consider "busy" vehicles
+            if len(v.Path_edges) > 0:
+            
+                # current location is a Node?
+                if type(v.Loc) == Node:
 
-            # current location is a Node?
-            if type(v.Loc) == Node:
-
-                # is vehicle owner of next edge in path?
-                if v in v.Path_edges[0].Owners:
+                    # is vehicle owner of next in edge path
+                    if v in v.Path_edges[0].Owners:
                     
-                    # no longer owner of node that is now exited by vehicle
-                    if v in v.Loc.Owners: v.Loc.Owners.remove(v)
+                        # no longer owner of node that is now exited by vehicle
+                        if v in v.Loc.Owners: v.Loc.Owners.remove(v)
 
-                    # update vehicle location
-                    v.Loc = v.Path_edges[0]
+                        # update vehicle location
+                        v.Loc = v.Path_edges[0]
 
-                    # update node future and history
-                    if v.Loc.I == v.Job.Nodes_future[0]: v.Job.Nodes_history.append(v.Job.Nodes_future.pop(0))
+                        # update node future and history
+                        if v.Loc.I == v.Job.Nodes_future[0]: v.Job.Nodes_history.append(v.Job.Nodes_future.pop(0))
 
-            # all vehicles that are on a edge consume one time step of remaining dwell time on edge
-            if type(v.Loc) == Edge:
+                # all vehicles that are on a edge consume one time step of remaining dwell time on edge
+                if type(v.Loc) == Edge:
 
-                v.Path_edgetimes -= 1 # consume one time step of dwell time on edge
+                    v.Path_edgetimes -= 1 # consume one time step of dwell time on edge
 
         #############################################################################################################################################################
         # 4: any vehicle that has completed its edge enters node at edge end, if node is free; update location attribute in all vehicles
         for v in self.Vehicles: # TODO allow for different ordering strategies here, instead of same vehicle sequence every time (without using strategies.py)
 
-            if v.Job:
+            if v.Job !=None and len(v.Path_edges)>0:
 
                 if v.Path_edgetimes[0] <= 0:
 
